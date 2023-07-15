@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
@@ -21,7 +22,7 @@ namespace CreateSasToken
             var contaunerName = Environment.GetEnvironmentVariable("BlobName");
             try
             {
-                var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable(accountKey));
+                var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting(accountKey));
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 var container = blobClient.GetContainerReference(contaunerName);
                 container.CreateIfNotExistsAsync();
@@ -35,7 +36,7 @@ namespace CreateSasToken
                 };
 
 
-                var sasBlobToken = blob.GetSharedAccessSignature(sasContraints, null, null, null, null);
+                var sasBlobToken = blob.GetSharedAccessSignature(sasContraints);
 
                 return new OkObjectResult(sasBlobToken);
             }
