@@ -30,7 +30,7 @@ namespace CreateSasToken
                 var sasContraints = new SharedAccessBlobPolicy
                 {
                     SharedAccessStartTime = DateTime.UtcNow.AddMinutes(-5),
-                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(48),
                     Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write
                 };
 
