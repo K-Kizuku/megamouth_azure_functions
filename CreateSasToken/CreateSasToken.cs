@@ -22,7 +22,7 @@ namespace CreateSasToken
             var contaunerName = Environment.GetEnvironmentVariable("BlobName");
             try
             {
-                var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting(accountKey));
+                var storageAccount = CloudStorageAccount.Parse(accountKey);
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 var container = blobClient.GetContainerReference(contaunerName);
                 container.CreateIfNotExistsAsync();
