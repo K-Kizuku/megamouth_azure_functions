@@ -34,9 +34,8 @@ namespace CreateSasToken
                     Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write
                 };
 
-                var ipRange = new IPAddressOrRange("192.168.192.168");
 
-                var sasBlobToken = blob.GetSharedAccessSignature(sasContraints, null, null, null, ipRange);
+                var sasBlobToken = blob.GetSharedAccessSignature(sasContraints, null, null, null, null);
 
                 return new OkObjectResult(sasBlobToken);
             }
