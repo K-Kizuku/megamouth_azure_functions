@@ -20,15 +20,15 @@ namespace CreateSasToken
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var accountName = Environment.GetEnvironmentVariable("AccountName");
+            string blobName = req.Query["name"];
             var accountKey = Environment.GetEnvironmentVariable("AccountKey");
-            var blobName = Environment.GetEnvironmentVariable("BlobName");
+            var contaunerName = Environment.GetEnvironmentVariable("BlobName");
 
             var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting(accountKey));
 
             var blobClient = storageAccount.CreateCloudBlobClient();
 
-            var container = blobClient.GetContainerReference(accountName);
+            var container = blobClient.GetContainerReference(contaunerName);
             await container.CreateIfNotExistsAsync();
 
             var blob = container.GetBlockBlobReference(blobName);
@@ -38,9 +38,7 @@ namespace CreateSasToken
             sasContraints.SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24);
             sasContraints.Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write;
 
-            var ipRange = new IPAddressOrRange("192.168.192.168");
-
-            var sasBlobToken = blob.GetSharedAccessSignature(sasContraints, null, null, null, ipRange);
+            var sasBlobToken = blob.GetSharedAccessSignature(sasContraints, null, null, null, null);
 
             return new OkObjectResult(sasBlobToken);
         }
