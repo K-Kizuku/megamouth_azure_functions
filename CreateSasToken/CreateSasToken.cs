@@ -32,7 +32,7 @@ namespace CreateSasToken
                 {
                     SharedAccessStartTime = DateTime.UtcNow.AddMinutes(-5),
                     SharedAccessExpiryTime = DateTime.UtcNow.AddHours(48),
-                    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write
+                    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Add | SharedAccessBlobPermissions.Create
                 };
 
 
